@@ -31,8 +31,9 @@ public:
 
     // Zoom
     float getNormalizedZoom() const;
-    int32_t getIntegerZoom() const;
     double getZoom() const;
+    int32_t getIntegerZoom() const;
+    double getZoomFraction() const;
     double getScale() const;
 
     // Rotation

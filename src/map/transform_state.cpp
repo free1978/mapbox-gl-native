@@ -95,12 +95,16 @@ float TransformState::getNormalizedZoom() const {
     return std::log(scale * util::tileSize / 512.0f) / M_LN2;
 }
 
+double TransformState::getZoom() const {
+    return std::log(scale) / M_LN2;
+}
+
 int32_t TransformState::getIntegerZoom() const {
     return std::floor(getZoom());
 }
 
-double TransformState::getZoom() const {
-    return std::log(scale) / M_LN2;
+double TransformState::getZoomFraction() const {
+    return getZoom() - getIntegerZoom();
 }
 
 double TransformState::getScale() const {
