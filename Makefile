@@ -105,4 +105,4 @@ distclean: clean
 	-rm -rf ./config.gypi
 	-rm -rf ./mapnik-packaging/osx/out/
 
-.PHONY: mbgl test linux
+.PHONY: mbgl test linux build/test/Makefile
