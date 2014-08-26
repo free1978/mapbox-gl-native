@@ -51,7 +51,7 @@ set -u
 NODE=$(which node)
 NPM=$(which npm)
 
-MP_HASH="6d7e83e8042"
+MP_HASH="e741a075d28"
 if [ ! -d 'mapnik-packaging/' ]; then
   git clone https://github.com/mapnik/mapnik-packaging.git
 fi
@@ -82,17 +82,17 @@ source iPhoneOS.sh
     echo '     ...done'
 
 source iPhoneOSs.sh
-    if [ ! -f out/build-cpp11-libcpp-armv7s-iphoneos/lib/libpng.a ] ; then ./scripts/build_png.sh ; fi
-    if [ ! -f out/build-cpp11-libcpp-armv7s-iphoneos/lib/libuv.a ] ; then ./scripts/build_libuv.sh ; fi
-    if [ ! -f out/build-cpp11-libcpp-armv7s-iphoneos/lib/libcurl.a ] ; then ./scripts/build_curl.sh ; fi
-    if [ ! -f out/build-cpp11-libcpp-armv7s-iphoneos/lib/libsqlite3.a ] ; then ./scripts/build_sqlite.sh ; fi
+    if [ ! -f out/build-cpp11-libcpp-armv7s-iphoneoss/lib/libpng.a ] ; then ./scripts/build_png.sh ; fi
+    if [ ! -f out/build-cpp11-libcpp-armv7s-iphoneoss/lib/libuv.a ] ; then ./scripts/build_libuv.sh ; fi
+    if [ ! -f out/build-cpp11-libcpp-armv7s-iphoneoss/lib/libcurl.a ] ; then ./scripts/build_curl.sh ; fi
+    if [ ! -f out/build-cpp11-libcpp-armv7s-iphoneoss/lib/libsqlite3.a ] ; then ./scripts/build_sqlite.sh ; fi
     echo '     ...done'
 
 source iPhoneOS64.sh
-    if [ ! -f out/build-cpp11-libcpp-arm64-iphoneos/lib/libpng.a ] ; then ./scripts/build_png.sh ; fi
-    if [ ! -f out/build-cpp11-libcpp-arm64-iphoneos/lib/libuv.a ] ; then ./scripts/build_libuv.sh ; fi
-    if [ ! -f out/build-cpp11-libcpp-arm64-iphoneos/lib/libcurl.a ] ; then ./scripts/build_curl.sh ; fi
-    if [ ! -f out/build-cpp11-libcpp-arm64-iphoneos/lib/libsqlite3.a ] ; then ./scripts/build_sqlite.sh ; fi
+    if [ ! -f out/build-cpp11-libcpp-arm64-iphoneos64/lib/libpng.a ] ; then ./scripts/build_png.sh ; fi
+    if [ ! -f out/build-cpp11-libcpp-arm64-iphoneos64/lib/libuv.a ] ; then ./scripts/build_libuv.sh ; fi
+    if [ ! -f out/build-cpp11-libcpp-arm64-iphoneos64/lib/libcurl.a ] ; then ./scripts/build_curl.sh ; fi
+    if [ ! -f out/build-cpp11-libcpp-arm64-iphoneos64/lib/libsqlite3.a ] ; then ./scripts/build_sqlite.sh ; fi
     echo '     ...done'
 
 source iPhoneSimulator.sh
@@ -122,6 +122,8 @@ source MacOSX.sh
     echo '     ...done'
 
 ./scripts/make_universal.sh
+patch -p0 --forward < patches/curl-ios.diff || true
+echo "NOTE: One patch FAILURE is expected. The other should have been applied or ignored."
 
 if [ ! -z "${TRAVIS:-}" ]; then
     tar -zcf out/build-cpp11-libcpp-universal_${MP_HASH}.tar.gz out/build-cpp11-libcpp-universal
