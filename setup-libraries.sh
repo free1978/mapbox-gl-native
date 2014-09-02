@@ -51,7 +51,7 @@ set -u
 NODE=$(which node)
 NPM=$(which npm)
 
-MP_HASH="e741a075d28812e5d16b581e1540248fe19c52ce"
+MP_HASH="821a2ab266ea031e32c77b63d56065ebb472e0fd"
 DIR_HASH=$(echo `pwd` | git hash-object --stdin)
 if [ ! -d 'mapnik-packaging/' ]; then
   git clone https://github.com/mapnik/mapnik-packaging.git
@@ -95,12 +95,10 @@ source iPhoneSimulator.sh
     if [ ! -f out/build-cpp11-libcpp-i386-iphonesimulator/lib/libuv.a ] ; then ./scripts/build_libuv.sh ; fi
     echo '     ...done'
 
-# libs conflict with MacOSX build
-# TODO: need to break apart targets
-#source iPhoneSimulator64.sh
-#    if [ ! -f out/build-cpp11-libcpp-x86_64-iphonesimulator/lib/libpng.a ] ; then ./scripts/build_png.sh ; fi
-#    if [ ! -f out/build-cpp11-libcpp-x86_64-iphonesimulator/lib/libuv.a ] ; then ./scripts/build_libuv.sh ; fi
-#    echo '     ...done'
+source iPhoneSimulator64.sh
+   if [ ! -f out/build-cpp11-libcpp-x86_64-iphonesimulator/lib/libpng.a ] ; then ./scripts/build_png.sh ; fi
+   if [ ! -f out/build-cpp11-libcpp-x86_64-iphonesimulator/lib/libuv.a ] ; then ./scripts/build_libuv.sh ; fi
+   echo '     ...done'
 
 source MacOSX.sh
     if [ ! -f out/build-cpp11-libcpp-x86_64-macosx/lib/libpng.a ] ; then ./scripts/build_png.sh ; fi
@@ -123,7 +121,7 @@ fi
 cd ../../
 ./configure \
 --pkg-config-root=`pwd`/mapnik-packaging/osx/out/build-cpp11-libcpp-universal/lib/pkgconfig \
---boost=`pwd`/mapnik-packaging/osx/out/build-cpp11-libcpp-universal \
+--boost=`pwd`/mapnik-packaging/osx/out/build-cpp11-libcpp-x86_64-macosx \
 --npm=$NPM \
 --node=$NODE
 
